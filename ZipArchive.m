@@ -433,7 +433,7 @@
                 index++;
                 int p = index*100/_numFiles;
                 progress = p;
-                _progressBlock(progress, index, _numFiles);
+                _progressBlock(progress, index, _numFiles, strPath);
             }
         }
     } while (ret==UNZ_OK && ret!=UNZ_END_OF_LIST_OF_FILE);
@@ -533,7 +533,7 @@
                 index++;
                 int p = index*100/_numFiles;
                 progress = p;
-                _progressBlock(progress, index, _numFiles);
+                _progressBlock(progress, index, _numFiles, strPath);
             }
         }
     } while (ret==UNZ_OK && ret!=UNZ_END_OF_LIST_OF_FILE);
