@@ -464,6 +464,12 @@
             else
                 [_fileManager createDirectoryAtPath:[fullPath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
             
+            // Send message to delegate about the file we're about to decompress
+            index++;
+            if ([_delegate respondsToSelector:@selector(zipArchive:willBeginToDecompressFile:number:of:withTotalUncompressedBytes:)]) {
+                [_delegate zipArchive:self willBeginToDecompressFile:strPath number:index of:_numFiles withTotalUncompressedBytes:fileInfo.uncompressed_size];
+            }
+            
             FILE* fp = NULL;
             do
             {
@@ -488,6 +494,11 @@
                         }
                     }
                     fwrite(buffer, read, 1, fp );
+                    
+                    // Send message to delegate about number of bytes written out
+                    if ([_delegate respondsToSelector:@selector(zipArchive:uncompressedBytesWritten:)]) {
+                        [_delegate zipArchive:self uncompressedBytesWritten:read];
+                    }
                 }
                 else // if (read < 0)
                 {
@@ -550,7 +561,7 @@
             }
             
             if (_progressBlock && _numFiles) {
-                index++;
+                //index++;
                 int p = index*100/_numFiles;
                 progress = p;
                 _progressBlock(progress, index, _numFiles, strPath);
@@ -623,6 +634,12 @@
                 strPath = [strPath stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
             }
             
+            // Send message to delegate about the file we're about to decompress
+            index++;
+            if ([_delegate respondsToSelector:@selector(zipArchive:willBeginToDecompressFile:number:of:withTotalUncompressedBytes:)]) {
+                [_delegate zipArchive:self willBeginToDecompressFile:strPath number:index of:_numFiles withTotalUncompressedBytes:fileInfo.uncompressed_size];
+            }
+            
             NSMutableData *fileMutableData = [NSMutableData data];
             do
             {
@@ -632,6 +649,11 @@
                     if (read != 0)
                     {
                         [fileMutableData appendBytes:buffer length:read];
+                    }
+                    
+                    // Send message to delegate about number of bytes written out
+                    if ([_delegate respondsToSelector:@selector(zipArchive:uncompressedBytesWritten:)]) {
+                        [_delegate zipArchive:self uncompressedBytesWritten:read];
                     }
                 }
                 else // if (read < 0)
@@ -662,7 +684,7 @@
             }
             
             if (_progressBlock && _numFiles) {
-                index++;
+                //index++;
                 int p = index*100/_numFiles;
                 progress = p;
                 _progressBlock(progress, index, _numFiles, strPath);
