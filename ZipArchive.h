@@ -110,8 +110,12 @@ typedef void(^ZipArchiveProgressUpdateBlock)(int percentage, int filesProcessed,
 -(BOOL) CreateZipFile2:(NSString*) zipFile append:(BOOL)isAppend;
 -(BOOL) CreateZipFile2:(NSString*) zipFile Password:(NSString*) password;
 -(BOOL) CreateZipFile2:(NSString*) zipFile Password:(NSString*) password append:(BOOL)isAppend;
+
 -(BOOL) addFileToZip:(NSString*) file newname:(NSString*) newname;
 -(BOOL) addDataToZip:(NSData*) data fileAttributes:(NSDictionary *)attr newname:(NSString*) newname;
+
+-(NSInteger) addFolderToZip:(NSString*)path pathPrefix:(NSString*)prefix;
+
 -(BOOL) CloseZipFile2;
 
 -(BOOL) UnzipOpenFile:(NSString*) zipFile;
