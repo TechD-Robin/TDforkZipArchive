@@ -464,17 +464,17 @@
     if ( nil != demoList )
     {
         [demoList                   removeAllObjects];
-        [demoList                   release];
-        demoList                    = nil;
+        SAFE_ARC_RELEASE( demoList );
+        SAFE_ARC_ASSIGN_POINTER_NIL( demoList );;
     }
     
     if ( nil != zipArchive )
     {
-        [zipArchive                 release];
-        zipArchive                  = nil;
+        SAFE_ARC_RELEASE( zipArchive );
+        SAFE_ARC_ASSIGN_POINTER_NIL( zipArchive );
     }
     
-    [super                          dealloc];
+    SAFE_ARC_SUPER_DEALLOC();
 }
 
 //  ------------------------------------------------------------------------------------------------
