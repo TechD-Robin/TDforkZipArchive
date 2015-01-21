@@ -70,7 +70,7 @@
 //  ------------------------------------------------------------------------------------------------
 - ( void ) _InitAttributes
 {
-    demoList                        = [NSMutableArray arrayWithCapacity: 4];
+    demoList                        = [[NSMutableArray alloc] initWithCapacity: 4];
     [demoList                       addObject: @" unzip from default zip file to tmp" ];
     [demoList                       addObject: @" unzip to tmp with callback" ];
     [demoList                       addObject: @" unzip to tmp with cb & delegate"];
@@ -103,7 +103,6 @@
     SAFE_ARC_RELEASE( demoViewController );
     SAFE_ARC_ASSIGN_POINTER_NIL( demoViewController );
 }
-
 
 //  ------------------------------------------------------------------------------------------------
 //  ------------------------------------------------------------------------------------------------
@@ -453,6 +452,30 @@
 
 
 @implementation TableViewController
+
+//  ------------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
+#pragma mark overwrite implementation of NSObject.
+//  ------------------------------------------------------------------------------------------------
+- (void) dealloc
+{
+    [self                           _ReleaseDemoViewController];
+    
+    if ( nil != demoList )
+    {
+        [demoList                   removeAllObjects];
+        [demoList                   release];
+        demoList                    = nil;
+    }
+    
+    if ( nil != zipArchive )
+    {
+        [zipArchive                 release];
+        zipArchive                  = nil;
+    }
+    
+    [super                          dealloc];
+}
 
 //  ------------------------------------------------------------------------------------------------
 //  ------------------------------------------------------------------------------------------------
