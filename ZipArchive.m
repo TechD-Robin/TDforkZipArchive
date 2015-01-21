@@ -8,6 +8,7 @@
 //
 */
 
+#import "ARCMacros.h"
 #import "ZipArchive.h"
 #import <zlib.h>
 #import <zconf.h>
@@ -64,11 +65,12 @@
     [self UnzipCloseFile];
     
     // release retained/copied properties.
-    [_password release];
-    [_delegate release];
-    [_unzippedFiles release];
+    // release retained/copied properties.
+    SAFE_ARC_RELEASE( _password );
+    SAFE_ARC_RELEASE( _delegate );
+    SAFE_ARC_RELEASE( _unzippedFiles );
     
-    [super dealloc];
+    SAFE_ARC_SUPER_DEALLOC();
 }
 
 /**
@@ -161,7 +163,7 @@
     NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents* components = [gregorianCalendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |
                                     NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:fileDate];
-    [gregorianCalendar release];
+    SAFE_ARC_RELEASE( gregorianCalendar );
     
     zipInfo.tmz_date.tm_sec = (uInt)components.second;
     zipInfo.tmz_date.tm_min = (uInt)components.minute;
@@ -350,7 +352,7 @@
 -(BOOL) UnzipOpenFile:(NSString*) zipFile
 {
     // create an array to receive the list of unzipped files.
-    if (_unzippedFiles) [_unzippedFiles release];
+    if (_unzippedFiles) SAFE_ARC_RELEASE( _unzippedFiles );
     _unzippedFiles = [[NSMutableArray alloc] initWithCapacity:1];
     
     _unzFile = unzOpen( (const char*)[zipFile UTF8String] );
@@ -527,9 +529,9 @@
                     components.year = fileInfo.tmu_date.tm_year;
                     
                     NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-                    NSDate* orgDate = [[gregorianCalendar dateFromComponents:components] retain];
-                    [components release];
-                    [gregorianCalendar release];
+                    NSDate* orgDate =  SAFE_ARC_RETAIN( [gregorianCalendar dateFromComponents:components] );
+                    SAFE_ARC_RELEASE( components );
+                    SAFE_ARC_RELEASE( gregorianCalendar );
                     
                     NSDictionary* attr = [NSDictionary dictionaryWithObject:orgDate forKey:NSFileModificationDate]; //[_fileManager fileAttributesAtPath:fullPath traverseLink:YES];
                     if( attr )
@@ -542,7 +544,7 @@
                         }
                         
                     }
-                    [orgDate release];
+                    SAFE_ARC_RELEASE( orgDate );
                     orgDate = nil;
                 }
                 
@@ -825,8 +827,8 @@
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDate *date = [gregorian dateFromComponents:comps];
     
-    [comps release];
-    [gregorian release];
+    SAFE_ARC_RELEASE( comps );
+    SAFE_ARC_RELEASE( gregorian );
     return date;
 }
 
