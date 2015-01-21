@@ -795,6 +795,9 @@
  */
 -(void) OutputErrorMessage:(NSString*) msg
 {
+#ifdef DEBUG
+    NSLog( @"%s", [msg UTF8String] );
+#endif  //  End of DEBUG
     if( _delegate && [_delegate respondsToSelector:@selector(ErrorMessage:)] )
         [_delegate ErrorMessage:msg];
 }
