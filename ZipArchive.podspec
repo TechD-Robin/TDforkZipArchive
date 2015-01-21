@@ -11,7 +11,7 @@ It can be used for iPhone application development, and cocoa on Mac OSX as well.
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Unknown Name" => "acsolu@gmail.com", "Matt Connolly" => "matt.connolly@me.com" }
   s.source       = { :git => 'https://github.com/TechD-Robin/ZipArchive', :tag => '1.3.2' }
-  s.source_files = '*.{h,m}', 'minizip/*.{h,c}'  
+  s.source_files = 'ARCMacros.h', 'ZipArchive.{h,m}', 'minizip/crypt.{h,c}', 'minizip/ioapi.{h,c}', 'minizip/mztools.{h,c}', 'minizip/unzip.{h,c}', 'minizip/zip.{h,c}'  
   s.public_header_files = '*.h'
   s.library   = 'z'
   s.requires_arc = false
