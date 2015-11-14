@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "ZipArchive"
+  s.name         = "TDforkZipArchive"
   s.version      = "1.3.2"
   s.summary      = "An Objective C class for zip/unzip on iPhone and Mac OS X."
   s.description  = <<-DESC
@@ -11,7 +11,7 @@ It can be used for iPhone application development, and cocoa on Mac OSX as well.
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Unknown Name" => "acsolu@gmail.com", "Matt Connolly" => "matt.connolly@me.com" }
 
-  s.source       = { :git => 'https://github.com/TechD-Robin/TDforkZipArchive', :tag => '1.3.2' }
+  s.source       = { :git => 'https://github.com/TechD-Robin/TDforkZipArchive.git', :tag => '1.3.2' }
   
   s.source_files = 'ARCMacros.h', 'ZipArchive.{h,m}', 'minizip/crypt.{h,c}', 'minizip/ioapi.{h,c}', 'minizip/mztools.{h,c}', 'minizip/unzip.{h,c}', 'minizip/zip.{h,c}'  
   s.public_header_files = '*.h'
